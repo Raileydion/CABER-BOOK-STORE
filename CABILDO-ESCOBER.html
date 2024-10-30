@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CABER BOOK STORE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #444;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .books {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .book {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            width: calc(30% - 40px);
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .book:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .book img {
+            width: auto;
+            height: 200px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .book p {
+            margin: 5px 0;
+        }
+
+        .order-section {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            text-align: left;
+            max-width: 300px;
+            margin-left: auto; 
+            margin-right: auto; 
+        }
+
+        .order-section h2 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .order-section label, .order-section p {
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 1em;
+        }
+
+        #quantity {
+            width: 60px;
+            padding: 5px;
+            font-size: 1em;
+            margin-left: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white; 
+            padding: 10px; 
+            margin-top: 10px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 1em; 
+        }
+
+        button:hover {
+           background-color:#45a049; 
+        }
+
+        button.cancel {
+           background-color:#f44336; 
+        }
+
+        button.cancel:hover {
+           background-color:#e53935; 
+        }
+
+        .hidden {
+           display:none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CABER BOOK STORE</h1>
+
+        <div class="books">
+          <div class="book" onclick="selectItem('Noli Me Tangere', 500)">
+              <img src="2012b-noli_me_tangere.jpg" alt="Noli Me Tangere">
+              <p><strong>Noli Me Tangere</strong></p>
+              <p>₱500</p>
+          </div>
+          <div class="book" onclick="selectItem('El Filibusterismo', 800)">
+              <img src="edc3622b98ad0fd81999757a690fa70a.jpg" alt="El Filibusterismo">
+              <p><strong>El Filibusterismo</strong></p>
+              <p>₱800</p>
+          </div>
+          <div class="book" onclick="selectItem('Florante at Laura', 900)">
+              <img src="floranteasd.jpg" alt="Florante at Laura">
+              <p><strong>Florante at Laura</strong></p>
+              <p>₱900</p>
+          </div>
+       </div>
+
+       <div id="order-section" class="order-section hidden">
+           <h2>Order Summary</h2>
+           <p>Selected Item:<span id="selected-item"></span></p>
+           <label for="quantity">Quantity:</label>
+           <input type="number" id="quantity" value="1" min="1" oninput="calculateTotal()">
+           <p>Total Amount:<span id="total-amount">₱0</span></p>
+           <button class="cancel" onclick="cancelOrder()">Cancel</button>
+           <button onclick="placeOrder()">Order</button>
+       </div>
+   </div>
+
+   <script>
+       let selectedItem = '';
+       let selectedPrice = 0;
+
+       function selectItem(item, price) {
+           selectedItem = item;
+           selectedPrice = price;
+           document.getElementById('selected-item').innerText = item;
+           document.getElementById('order-section').classList.remove('hidden');
+           document.getElementById('quantity').value = '1';
+           calculateTotal();
+       }
+
+       function calculateTotal() {
+           const quantity = document.getElementById('quantity').value || '1';
+           const total = quantity * selectedPrice;
+           document.getElementById('total-amount').innerText = `${total}`;
+       }
+
+       function cancelOrder() {
+           document.getElementById('order-section').classList.add('hidden');
+       }
+
+       function placeOrder() {
+           alert(`Thank you for ordering ${selectedItem}! Your total is ₱${document.getElementById('total-amount').innerText}.`);
+           cancelOrder();
+       }
+   </script>
+</body>
+</html>
